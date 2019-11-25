@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Ítalo Barros</author>
+ <class>aboutDialog</class>
+ <widget class="QDialog" name="aboutDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>About and Contact</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: #2A2E37;</string>
+  </property>
+  <widget class="QLabel" name="main_Text">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>40</y>
+     <width>261</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>8</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(252, 255, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>Laboratory of Systems Engineering and Robotics</string>
+   </property>
+  </widget>
+  <widget class="QCommandLinkButton" name="tiago_Contact">
+   <property name="geometry">
+    <rect>
+     <x>56</x>
+     <y>260</y>
+     <width>135</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Droid Arabic Naskh</family>
+     <pointsize>7</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string>Contact Tiago Nascimento</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+selection-background-color: rgb(142, 255, 242);</string>
+   </property>
+   <property name="text">
+    <string>tiagopn@ci.ufpb.br</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../images/vectors/vectors.qrc">
+     <normaloff>:/vectors/Contact.png</normaloff>:/vectors/Contact.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>15</width>
+     <height>15</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QFrame" name="roc_Logo">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>50</y>
+     <width>161</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/logos/roc_Logo.png);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QFrame" name="laser_Logo">
+   <property name="geometry">
+    <rect>
+     <x>168</x>
+     <y>5</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string>Go to LASER Website</string>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/logos/laser_logo.png);
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="superior_Line">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>60</y>
+     <width>340</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:  rgb(142, 255, 242);</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="inferior_Line">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>240</y>
+     <width>340</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:  rgb(142, 255, 242);</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="tiago_Text">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>245</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>6</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(252, 255, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>Laboratory Header/Faculty Member</string>
+   </property>
+  </widget>
+  <widget class="QCommandLinkButton" name="italo_Contact">
+   <property name="geometry">
+    <rect>
+     <x>208</x>
+     <y>260</y>
+     <width>161</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Droid Arabic Naskh</family>
+     <pointsize>7</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string>Contact Ítalo Barros</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+selection-background-color: rgb(142, 255, 242);</string>
+   </property>
+   <property name="text">
+    <string>italorenan_@hotmail.com</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../images/vectors/vectors.qrc">
+     <normaloff>:/vectors/Contact.png</normaloff>:/vectors/Contact.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>15</width>
+     <height>15</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="italo_Text">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>246</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>6</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(252, 255, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>Main Developer</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="roc_Text">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>130</y>
+     <width>161</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(252, 255, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>Robot Operational Controller (ROC)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="version_Text">
+   <property name="geometry">
+    <rect>
+     <x>75</x>
+     <y>160</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(252, 255, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>Version Alpha 0.1</string>
+   </property>
+  </widget>
+  <zorder>roc_Logo</zorder>
+  <zorder>laser_Logo</zorder>
+  <zorder>main_Text</zorder>
+  <zorder>superior_Line</zorder>
+  <zorder>inferior_Line</zorder>
+  <zorder>tiago_Text</zorder>
+  <zorder>tiago_Contact</zorder>
+  <zorder>italo_Text</zorder>
+  <zorder>italo_Contact</zorder>
+  <zorder>roc_Text</zorder>
+  <zorder>version_Text</zorder>
+ </widget>
+ <resources>
+  <include location="../../../images/vectors/vectors.qrc"/>
+ </resources>
+ <connections/>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>10</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>10</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
+</ui>

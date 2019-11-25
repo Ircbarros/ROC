@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>robotOneConfig</class>
+ <widget class="QDialog" name="robotOneConfig">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>340</width>
+    <height>426</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>340</width>
+    <height>426</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>340</width>
+    <height>426</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Settings (TB1)</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../images/vectors/vectors.qrc">
+    <normaloff>:/vectors/Conection.png</normaloff>:/vectors/Conection.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: #2A2E37;</string>
+  </property>
+  <widget class="QGroupBox" name="settingsTB1">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>20</y>
+     <width>326</width>
+     <height>180</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>320</width>
+     <height>140</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="title">
+    <string>Variables and Settings:</string>
+   </property>
+   <widget class="QLineEdit" name="ros_TB1_IP">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>30</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>ex.:192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ros_Master_IP">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>60</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);
+background: rgba(29, 222, 216, 0.1);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: 192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ros_TB1_Hostname">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>118</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.:192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ros_TB1_Namespace">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>148</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: robot_0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="my_IP_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>32</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>ROS_MY_IP:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ros_TB1_IP</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="master_IP_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>62</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>MASTER_IP:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ros_Master_IP</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="hostname_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>120</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>HOSTNAME:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ros_TB1_Hostname</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="namespace_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>150</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>NAMESPACE:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ros_TB1_Namespace</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="master_URI_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>MASTER_URI:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ros_Master_URI</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ros_Master_URI">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>88</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: http://localhost:11311</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="sshTB1">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>220</y>
+     <width>326</width>
+     <height>150</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="title">
+    <string>SSH Configuration:</string>
+   </property>
+   <widget class="QLineEdit" name="ssh_TB1_User">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>58</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: turtlebot</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ssh_TB1_Password">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>88</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: turtlebot</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ssh_Port_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>120</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>PORT:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ssh_TB1_Port</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ssh_TB1_Port">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>118</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: 80</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ssh_User_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>60</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>USER:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ssh_TB1_User</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ssh_TB1_IP">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>28</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: 192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ssh_Password_TB1_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>PASSWORD:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ssh_TB1_Password</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ssh_TB1_IP_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>30</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>TURTLEBOT IP:</string>
+    </property>
+    <property name="buddy">
+     <cstring>ssh_TB1_IP</cstring>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttons_Config_TB1">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>390</y>
+     <width>166</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../../images/vectors/vectors.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ssh_TB1_Port</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>236</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ssh_TB1_Password</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>312</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ssh_TB1_User</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ssh_TB1_IP</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ros_TB1_Namespace</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ros_TB1_Hostname</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ros_Master_URI</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>402</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ros_Master_IP</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>179</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_TB1</sender>
+   <signal>accepted()</signal>
+   <receiver>ros_TB1_IP</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

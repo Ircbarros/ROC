@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>qrReaderApp</class>
+ <widget class="QDialog" name="qrReaderApp">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>260</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QR Code Reader</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../images/vectors/vectors.qrc">
+    <normaloff>:/vectors/qrcode.png</normaloff>:/vectors/qrcode.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: #2A2E37;</string>
+  </property>
+  <widget class="QDialogButtonBox" name="qrapp_Buttons">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>195</y>
+     <width>81</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(199, 199, 199);</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="objectInfo">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>99</y>
+     <width>310</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="title">
+    <string>Object Information:</string>
+   </property>
+   <widget class="QLineEdit" name="weight_Value">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>58</y>
+      <width>41</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>W</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="object_Size_Value">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>88</y>
+      <width>161</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="whatsThis">
+     <string>1 - Small / 2 - Medium / 3 - Large</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mass_Point_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>120</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>CENTER OF MASS:</string>
+    </property>
+    <property name="buddy">
+     <cstring>mass_Point_Value</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="mass_Point_Value">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>118</y>
+      <width>161</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Normal</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>XX - XX</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dimmension_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>60</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>DIMMENSION (CM):</string>
+    </property>
+    <property name="buddy">
+     <cstring>weight_Value</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="object_Name">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>28</y>
+      <width>161</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="whatsThis">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>BOX XXXX</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="object_Size_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>OBJECT SIZE:</string>
+    </property>
+    <property name="buddy">
+     <cstring>object_Size_Value</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="object_Name_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>30</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>OBJECT NAME:</string>
+    </property>
+    <property name="buddy">
+     <cstring>object_Name</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lenght_Value">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>58</y>
+      <width>41</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>L</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="height_Value">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>58</y>
+      <width>41</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>H</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="x1_Label">
+    <property name="geometry">
+     <rect>
+      <x>175</x>
+      <y>60</y>
+      <width>13</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+    <property name="buddy">
+     <cstring>weight_Value</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="x2_Label">
+    <property name="geometry">
+     <rect>
+      <x>235</x>
+      <y>60</y>
+      <width>13</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+    <property name="buddy">
+     <cstring>weight_Value</cstring>
+    </property>
+   </widget>
+   <zorder>object_Size_Value</zorder>
+   <zorder>mass_Point_Label</zorder>
+   <zorder>mass_Point_Value</zorder>
+   <zorder>dimmension_Label</zorder>
+   <zorder>object_Name</zorder>
+   <zorder>object_Size_Label</zorder>
+   <zorder>object_Name_Label</zorder>
+   <zorder>height_Value</zorder>
+   <zorder>x1_Label</zorder>
+   <zorder>lenght_Value</zorder>
+   <zorder>x2_Label</zorder>
+   <zorder>weight_Value</zorder>
+  </widget>
+  <widget class="Line" name="qrapp_Line">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>10</y>
+     <width>1</width>
+     <height>240</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: rgba(29, 222, 216);</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QWidget" name="qr_Image" native="true">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>29</y>
+     <width>81</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="qr_Image_Label">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>10</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="text">
+    <string>QR CODE:</string>
+   </property>
+   <property name="buddy">
+    <cstring>object_Name</cstring>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="qrapp_New">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>10</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(199, 199, 199);</string>
+   </property>
+   <property name="text">
+    <string>NEW</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="qrapp_Edit">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>40</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(199, 199, 199);</string>
+   </property>
+   <property name="text">
+    <string>EDIT</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="qrapp_Delete">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>70</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(199, 199, 199);</string>
+   </property>
+   <property name="text">
+    <string>DELETE</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="camera_Image" native="true">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>29</y>
+     <width>111</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="camere_Image_Label">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>10</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="text">
+    <string>CAMERA IMAGE:</string>
+   </property>
+   <property name="buddy">
+    <cstring>object_Name</cstring>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../../images/vectors/vectors.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>qrapp_Buttons</sender>
+   <signal>accepted()</signal>
+   <receiver>qrReaderApp</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>qrapp_Buttons</sender>
+   <signal>rejected()</signal>
+   <receiver>qrReaderApp</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

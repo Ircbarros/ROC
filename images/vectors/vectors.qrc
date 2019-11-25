@@ -1,0 +1,26 @@
+<RCC>
+  <qresource prefix="vectors">
+    <file>data.png</file>
+    <file>info.png</file>
+    <file>config.png</file>
+    <file>docs.png</file>
+    <file>qrcode.png</file>
+    <file>BatteryHigh.png</file>
+    <file>BatteryLow.png</file>
+    <file>BatteryMedium.png</file>
+    <file>Conection.png</file>
+    <file>Contact.png</file>
+    <file>Home.png</file>
+    <file>InternetSignalHigh.png</file>
+    <file>InternetSignalLow.png</file>
+    <file>InternetSignalMedium.png</file>
+    <file>ShellWhite.png</file>
+  </qresource>
+  <qresource prefix="logos">
+    <file>roc_Logo.png</file>
+    <file>ci_logo.jpeg</file>
+    <file>ufpb_logo_2.png</file>
+    <file>Ufpb_logo.png</file>
+    <file>laser_logo.png</file>
+  </qresource>
+</RCC>
