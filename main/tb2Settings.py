@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/python2.7
 
 # Form implementation generated from reading ui file 'tb2Settings.ui'
 #
@@ -6,8 +7,32 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+
+__author__ = "Ítalo Barros"
+__copyright__ = "Copyright 2019, LASER - UFPB"
+__license__ = "X11"
+__version__ = "alpha 0.1"
+__maintainer__ = "Ítalo Barros"
+__email__ = "italorenan_@hotmail.com"
+__status__ = "In Development"
+
 import vectors
 from PyQt5 import QtCore, QtGui, QtWidgets
+try:
+    import xml.etree.cElementTree as et
+except ImportError:
+    import xml.etree.ElementTree as et
+
+
+class sucessDialog(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        sucessDialog = QtWidgets.QMessageBox()
+        sucessDialog.setWindowTitle('Settings (TB2)')
+        sucessDialog.setText('As modificações foram salvas com sucesso!')
+        sucessDialog.setIcon(QtWidgets.QMessageBox.Information)
+        sucessDialog.show()
+        sucessDialog.exec_()
+
 
 class Ui_robotTwoConfig(object):
     """ Open the TB2 Settings and Configurations Widget"""
@@ -117,6 +142,8 @@ class Ui_robotTwoConfig(object):
         self.buttons_Config_TB2.setGeometry(QtCore.QRect(80, 390, 166, 24))
         self.buttons_Config_TB2.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttons_Config_TB2.setObjectName("buttons_Config_TB2")
+        self.buttons_Config_TB2.accepted.connect(self.okButton)
+
         self.my_IP_TB2_Label.setBuddy(self.ros_TB2_IP)
         self.master_IP_TB2_Label.setBuddy(self.ros_Master_IP)
         self.hostname_TB2_Label.setBuddy(self.ros_TB2_Hostname)
@@ -128,15 +155,7 @@ class Ui_robotTwoConfig(object):
         self.ssh_TB2_IP_Label.setBuddy(self.ssh_TB2_IP)
 
         self.retranslateUi(robotTwoConfig)
-        self.buttons_Config_TB2.accepted.connect(self.ssh_TB2_Port.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ssh_TB2_Password.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ssh_TB2_User.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ssh_TB2_IP.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ros_TB2_Namespace.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ros_TB2_Hostname.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ros_Master_URI.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ros_Master_IP.copy)
-        self.buttons_Config_TB2.accepted.connect(self.ros_TB2_IP.copy)
+        self.buttons_Config_TB2.rejected.connect(robotTwoConfig.reject)
         QtCore.QMetaObject.connectSlotsByName(robotTwoConfig)
 
     def retranslateUi(self, robotTwoConfig):
@@ -162,6 +181,55 @@ class Ui_robotTwoConfig(object):
         self.ssh_TB2_IP.setPlaceholderText(_translate("robotTwoConfig", "ex.: 192.168.43.87"))
         self.ssh_Password_TB2_Label.setText(_translate("robotTwoConfig", "PASSWORD:"))
         self.ssh_TB2_IP_Label.setText(_translate("robotTwoConfig", "TURTLEBOT IP:"))
+
+    def okButton(self):
+        # ENV CONFIG
+        ros_TB2_IP_Value = self.ros_TB2_IP.text()
+        ros_Master_IP_Value = self.ros_Master_IP.text()
+        ros_Master_URI_Value = self.ros_Master_URI.text()
+        ros_Hostname_Value = self.ros_TB2_Hostname.text()
+        ros_TB2_Namespace_Value = self.ros_TB2_Namespace.text()
+        # SSH CONNECTION
+        ssh_TB2_IP_Value = self.ssh_TB2_IP.text()
+        ssh_TB2_User_Value = self.ssh_TB2_User.text()
+        ssh_TB2_Password_Value = self.ssh_TB2_Password.text()
+        ssh_TB2_Port_Value = self.ssh_TB2_Port.text()
+        # XML CREATION
+        environmentXMLFile = et.Element('TB2_Settings')
+        comment = et.Comment("TB2 ROS Environment and Configuration Variables")
+        environmentXMLFile.append(comment)
+        environmentConfig = et.SubElement(environmentXMLFile, 'TB2_MY_IP')
+        environmentConfig.text = str(ros_TB2_IP_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'ROS_MASTER_IP')
+        environmentConfig.text = str(ros_Master_IP_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'ROS_MASTER_URI')
+        environmentConfig.text = str(ros_Master_URI_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'TB2_ROS_HOSTNAME')
+        environmentConfig.text = str(ros_Hostname_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'TB2_ROS_NAMESPACE')
+        environmentConfig.text = str(ros_TB2_Namespace_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB2_IP')
+        environmentConfig.text = str(ssh_TB2_IP_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB2_USERNAME')
+        environmentConfig.text = str(ssh_TB2_User_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB2_PASSWORD')
+        environmentConfig.text = str(ssh_TB2_Password_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB2_PORT')
+        environmentConfig.text = str(ssh_TB2_Port_Value)
+        tree = et.ElementTree(environmentXMLFile)
+        tree.write('tb2Settings.xml', encoding='utf8')
+        # CHANGE THE PLACEHOLDER
+        _translate = QtCore.QCoreApplication.translate
+        self.ros_TB2_IP.setPlaceholderText(_translate("robotTwoConfig", ros_TB2_IP_Value))
+        self.ros_Master_IP.setPlaceholderText(_translate("robotTwoConfig", ros_Master_IP_Value))
+        self.ros_Master_URI.setPlaceholderText(_translate("robotTwoConfig", ros_Master_URI_Value))
+        self.ros_TB2_Hostname.setPlaceholderText(_translate("robotTwoConfig", ros_Hostname_Value))
+        self.ros_TB2_Namespace.setPlaceholderText(_translate("robotTwoConfig", ros_TB2_Namespace_Value))
+        self.ssh_TB2_IP.setPlaceholderText(_translate("robotTwoConfig", ssh_TB2_IP_Value))
+        self.ssh_TB2_User.setPlaceholderText(_translate("robotTwoConfig", ssh_TB2_User_Value))
+        self.ssh_TB2_Password.setPlaceholderText(_translate("robotOneConfig", ssh_TB2_Password_Value))
+        self.ssh_TB2_Port.setPlaceholderText(_translate("robotTwoConfig", ssh_TB2_Port_Value))
+        sucessDialog()
 
 if __name__ == "__main__":
     import sys

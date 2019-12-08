@@ -1,126 +1,92 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/python2.7
 
 # Form implementation generated from reading ui file 'roc.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
+
+__author__ = "Ítalo Barros"
+__copyright__ = "Copyright 2019, LASER - UFPB"
+__license__ = "X11"
+__version__ = "alpha 0.1"
+__maintainer__ = "Ítalo Barros"
+__email__ = "italorenan_@hotmail.com"
+__status__ = "In Development"
+
 import vectors
 import webbrowser
+import paramiko
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
 from qrApp import Ui_qrReaderApp
 from tb1Settings import Ui_robotOneConfig
+from tb1Settings import Ui_robotOneConfig
 from tb2Settings import Ui_robotTwoConfig
 from tb3Settings import Ui_robotThreeConfig
 from tb4Settings import Ui_robotFourConfig
+from rocSettings import Ui_rocConfigure
 from about import Ui_aboutDialog
+from paramiko import SSHClient
+from paramiko import SSHException
+try:
+    import xml.etree.cElementTree as et
+except ImportError:
+    import xml.etree.ElementTree as et
 
-class embeddedTerminal(QtWidgets.QWidget):
-    """
-    Starts an Embeddet urxvt-unicode terminal in the ROC
+# Global Variables
+robot_Selected_Value = 'None'
 
-    """
-    def __init__(self, parent=None):
-        """
-        Opens an new urxvt process inside the TabWidget
-        on the botton of the application.
-
-        """
-        super(embeddedTerminal, self).__init__(parent)
-        self.process = QtCore.QProcess(self)
-        self.urxvtTerminal = QtWidgets.QWidget(self)
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(self.urxvtTerminal)
-        # Works also with urxvt:
-        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
-        self.setGeometry(90, 460, 1160, 125)
-
-class robotOneTerminal(QtWidgets.QWidget):
-    """
-    Starts an Embeddet urxvt-unicode terminal in the ROC
-
-    """
-    def __init__(self, parent=None):
-        """
-        Opens an new urxvt process inside the TabWidget
-        on the botton of the application.
-
-        """
-        super(robotOneTerminal, self).__init__(parent)
-        self.process = QtCore.QProcess(self)
-        self.urxvtTerminal = QtWidgets.QWidget(self)
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(self.urxvtTerminal)
-        # Works also with urxvt:
-        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
-        self.setGeometry(90, 460, 1160, 125)
-
-class robotTwoTerminal(QtWidgets.QWidget):
-    """
-    Starts an Embeddet urxvt-unicode terminal in the ROC
-
-    """
-    def __init__(self, parent=None):
-        """
-        Opens an new urxvt process inside the TabWidget
-        on the botton of the application.
-
-        """
-        super(robotTwoTerminal, self).__init__(parent)
-        self.process = QtCore.QProcess(self)
-        self.urxvtTerminal = QtWidgets.QWidget(self)
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(self.urxvtTerminal)
-        # Works also with urxvt:
-        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
-        self.setGeometry(90, 460, 1160, 125)
-
-class robotThreeTerminal(QtWidgets.QWidget):
-    """
-    Starts an Embeddet urxvt-unicode terminal in the ROC
-
-    """
-    def __init__(self, parent=None):
-        """
-        Opens an new urxvt process inside the TabWidget
-        on the botton of the application.
-
-        """
-        super(robotThreeTerminal, self).__init__(parent)
-        self.process = QtCore.QProcess(self)
-        self.urxvtTerminal = QtWidgets.QWidget(self)
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(self.urxvtTerminal)
-        # Works also with urxvt:
-        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
-        self.setGeometry(90, 460, 1160, 125)
-
-class robotFourTerminal(QtWidgets.QWidget):
-    """
-    Starts an Embeddet urxvt-unicode terminal in the ROC
-
-    """
-    def __init__(self, parent=None):
-        """
-        Opens an new urxvt process inside the TabWidget
-        on the botton of the application.
-
-        """
-        super(robotFourTerminal, self).__init__(parent)
-        self.process = QtCore.QProcess(self)
-        self.urxvtTerminal = QtWidgets.QWidget(self)
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(self.urxvtTerminal)
-        # Works also with urxvt:
-        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
-        self.setGeometry(90, 460, 1160, 125)
 
 class Ui_MainWindow(object):
     """
     ROC - Robot Operational Controler Main Window Class
 
     """
+    def setExperiment(self, **kwargs):
+        """ Responsible to Handle the Set Experiment Button """
+        # If the dictionary robot value is 'tb1' then change the button Style
+        global robot_Selected_Value
+        if kwargs['robot'] =='1':
+            robot_Selected_Value = 'TB1'
+        elif kwargs['robot'] =='2':
+            robot_Selected_Value = 'TB2'
+        elif kwargs['robot'] =='3':
+            robot_Selected_Value = 'TB3'
+        elif kwargs['robot'] =='4':
+            robot_Selected_Value = 'TB4'
+        elif kwargs['set'] =='OK':
+            # CONFIGURATION VARIABLES
+            robot_Type_Value = self.robot_Selection_Type.currentText()
+            robot_Role_Value = self.robot_Selection_Role.currentText()
+            robot_Task_Value = self.robot_Selection_Task.currentText()
+            robot_Behavior_Value = self.robot_Selection_Behavior.currentText()
+            robot_Experiment_Value = self.robot_Selection_Experiment.currentText()
+            # XML CREATION
+            environmentXMLFile = et.Element('EXP_CONFIGURATIONS')
+            comment = et.Comment("Experiment Configuration and Variables")
+            environmentXMLFile.append(comment)
+            environmentConfig = et.SubElement(environmentXMLFile, 'ROBOT_SELECTED')
+            environmentConfig.text = str(robot_Selected_Value)
+            environmentConfig = et.SubElement(environmentXMLFile, 'ROBOT_TYPE')
+            environmentConfig.text = str(robot_Type_Value)
+            environmentConfig = et.SubElement(environmentXMLFile, 'ROBOT_ROLE')
+            environmentConfig.text = str(robot_Role_Value)
+            environmentConfig = et.SubElement(environmentXMLFile, 'ROBOT_TASK')
+            environmentConfig.text = str(robot_Task_Value)
+            environmentConfig = et.SubElement(environmentXMLFile, 'ROBOT_BEHAVIOR')
+            environmentConfig.text = str(robot_Behavior_Value)
+            environmentConfig = et.SubElement(environmentXMLFile, 'ROBOT_EXPERIMENT')
+            environmentConfig.text = str(robot_Experiment_Value)
+            try:
+                tree = et.ElementTree(environmentXMLFile)
+                tree.write('experimentConfig.xml', encoding='utf8')
+                operationSucess()
+            except:
+                operationError()
+
+
     def openQrApp(self):
         """ Open the QR Reader Applicaton """
         self.qrApp_Window = QtWidgets.QDialog()
@@ -134,6 +100,13 @@ class Ui_MainWindow(object):
         self.about_ui = Ui_aboutDialog()
         self.about_ui.setupUi(self.about_Window)
         self.about_Window.show()
+    
+    def openRocConfig(self):
+        """ Open the ROC Configurations Screen """
+        self.rocConfig_Window = QtWidgets.QDialog()
+        self.rocConfig_ui = Ui_rocConfigure()
+        self.rocConfig_ui.setupUi(self.rocConfig_Window)
+        self.rocConfig_Window.show()
 
     def openTB1Settings(self):
         """ Open the TB1 Settings and Configurations """
@@ -328,11 +301,12 @@ class Ui_MainWindow(object):
         self.data_Button.setIcon(icon2)
         self.data_Button.setIconSize(QtCore.QSize(45, 45))
         self.data_Button.setObjectName("data_Button")
+        self.data_Button.clicked.connect(InProgress)
+        # Config Button
         self.config_Button = QtWidgets.QCommandLinkButton(self.mainWindowBase)
         self.config_Button.setGeometry(QtCore.QRect(5, 400, 110, 70))
         font = QtGui.QFont()
         font.setPointSize(7)
-        # Config Button
         self.config_Button.setFont(font)
         self.config_Button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.config_Button.setToolTipDuration(3000)
@@ -343,6 +317,7 @@ class Ui_MainWindow(object):
         self.config_Button.setIcon(icon3)
         self.config_Button.setIconSize(QtCore.QSize(45, 45))
         self.config_Button.setObjectName("config_Button")
+        self.config_Button.clicked.connect(self.openRocConfig)
         # Docummentation Button
         self.docs_Button = QtWidgets.QCommandLinkButton(self.mainWindowBase)
         self.docs_Button.setGeometry(QtCore.QRect(1080, 15, 100, 50))
@@ -582,6 +557,7 @@ class Ui_MainWindow(object):
         self.line_TB1_3.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_TB1_3.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_TB1_3.setObjectName("line_TB1_3")
+        #
         self.reset_TB1 = QtWidgets.QPushButton(self.options_TB1)
         self.reset_TB1.setGeometry(QtCore.QRect(15, 162, 90, 20))
         self.reset_TB1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -739,6 +715,7 @@ class Ui_MainWindow(object):
         self.robot_Selection_ExpLabel.setGeometry(QtCore.QRect(20, 192, 91, 21))
         self.robot_Selection_ExpLabel.setStyleSheet("color: white;")
         self.robot_Selection_ExpLabel.setObjectName("robot_Selection_ExpLabel")
+        # Set de Experiment Button
         self.set_Selection_Values = QtWidgets.QPushButton(self.robotSelectionBase)
         self.set_Selection_Values.setGeometry(QtCore.QRect(77, 8, 50, 22))
         self.set_Selection_Values.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -747,6 +724,8 @@ class Ui_MainWindow(object):
                                                 "color: rgb(22, 22, 22);\n"
                                                 "font: 7pt \"Khmer OS\";")
         self.set_Selection_Values.setObjectName("set_Selection_Values")
+        self.set_Selection_Values.clicked.connect(lambda: self.setExperiment(robot='None', set='OK'))
+        # Reset de Experiment Button
         self.reset_Selection_Values = QtWidgets.QPushButton(self.robotSelectionBase)
         self.reset_Selection_Values.setGeometry(QtCore.QRect(169, 8, 31, 22))
         self.reset_Selection_Values.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -784,6 +763,7 @@ class Ui_MainWindow(object):
         self.robot_TB3_Selection.setToolTipDuration(3000)
         self.robot_TB3_Selection.setStyleSheet("color: white;")
         self.robot_TB3_Selection.setObjectName("robot_TB3_Selection")
+        # Run the Experiment/Others Button
         self.run_Selection_Values = QtWidgets.QPushButton(self.robotSelectionBase)
         self.run_Selection_Values.setGeometry(QtCore.QRect(20, 8, 50, 22))
         self.run_Selection_Values.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -792,6 +772,8 @@ class Ui_MainWindow(object):
                                                 "color: rgb(22, 22, 22);\n"
                                                 "font: 7pt \"Khmer OS\";")
         self.run_Selection_Values.setObjectName("run_Selection_Values")
+        self.run_Selection_Values.clicked.connect(InProgress)
+        # Down the Experiment/Others Button
         self.down_Selection_Values = QtWidgets.QPushButton(self.robotSelectionBase)
         self.down_Selection_Values.setGeometry(QtCore.QRect(135, 8, 31, 22))
         self.down_Selection_Values.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -800,6 +782,8 @@ class Ui_MainWindow(object):
                                                  "font: 7pt \"Khmer OS\";\n"
                                                  "background-color: rgb(107, 21, 18);")
         self.down_Selection_Values.setObjectName("down_Selection_Values")
+        self.down_Selection_Values.clicked.connect(InProgress)
+        # Selection Section Design
         self.selection_Superior_Line = QtWidgets.QFrame(self.mainWindowBase)
         self.selection_Superior_Line.setGeometry(QtCore.QRect(1061, 205, 220, 3))
         self.selection_Superior_Line.setStyleSheet("background: #1DDED8;")
@@ -1345,22 +1329,70 @@ class Ui_MainWindow(object):
         self.robot_TB3_Viewer.toggled['bool'].connect(lambda: self.robotsTerminals(robot='tb3'))
         self.robot_TB4_Viewer.toggled['bool'].connect(lambda: self.buttonStatusChange(robot='tb4'))
         self.robot_TB4_Viewer.toggled['bool'].connect(lambda: self.robotsTerminals(robot='tb4'))
-        self.reset_TB1.clicked.connect(self.gmapp_TB1_Show.toggle)
-        self.reset_TB1.clicked.connect(self.floor_TB1_Show.toggle)
-        self.reset_TB1.clicked.connect(self.kinect_TB1_Show.toggle)
-        self.reset_TB1.clicked.connect(self.camera_TB1_Show.toggle)
-        self.reset_TB2.clicked.connect(self.gmapp_TB2_Show.toggle)
-        self.reset_TB2.clicked.connect(self.floor_TB2_Show.toggle)
-        self.reset_TB2.clicked.connect(self.kinect_TB2_Show.toggle)
-        self.reset_TB2.clicked.connect(self.camera_TB2_Show.toggle)
-        self.reset_TB3.clicked.connect(self.gmapp_TB3_Show.toggle)
-        self.reset_TB3.clicked.connect(self.floor_TB3_Show.toggle)
-        self.reset_TB3.clicked.connect(self.kinect_TB3_Show.toggle)
-        self.reset_TB3.clicked.connect(self.camera_TB3_Show.toggle)
-        self.reset_TB4.clicked.connect(self.gmapp_TB4_Show.toggle)
-        self.reset_TB4.clicked.connect(self.floor_TB4_Show.toggle)
-        self.reset_TB4.clicked.connect(self.kinect_TB4_Show.toggle)
-        self.reset_TB4.clicked.connect(self.camera_TB4_Show.toggle)
+        # Configuration Robot Selection
+        self.robot_TB1_Selection.clicked.connect(lambda: self.setExperiment(robot='1', set='None'))
+        self.robot_TB2_Selection.clicked.connect(lambda: self.setExperiment(robot='2', set='None'))
+        self.robot_TB3_Selection.clicked.connect(lambda: self.setExperiment(robot='3', set='None'))
+        self.robot_TB4_Selection.clicked.connect(lambda: self.setExperiment(robot='4', set='None'))
+        # TB1 Reset Screen
+        self.reset_TB1.clicked.connect(lambda: self.gmapp_TB1_Show.setChecked(False))
+        self.reset_TB1.clicked.connect(lambda: self.floor_TB1_Show.setChecked(False))
+        self.reset_TB1.clicked.connect(lambda: self.kinect_TB1_Show.setChecked(False))
+        self.reset_TB1.clicked.connect(lambda: self.camera_TB1_Show.setChecked(False))
+        self.reset_TB1.clicked.connect(lambda: self.linear_TB1_Value.display(0))
+        self.reset_TB1.clicked.connect(lambda: self.angular_TB1_Value.display(0))
+        self.reset_TB1.clicked.connect(lambda: self.x_TB1_Value.display(0))
+        self.reset_TB1.clicked.connect(lambda: self.y_TB1_Value.display(0))
+        self.reset_TB1.clicked.connect(lambda: self.turtleBat_TB1_Value.display(0))
+        self.reset_TB1.clicked.connect(lambda: self.noteBat_TB1_Value.display(0))
+        # TB2 Reset Screen
+        self.reset_TB2.clicked.connect(lambda: self.gmapp_TB2_Show.setChecked(False))
+        self.reset_TB2.clicked.connect(lambda: self.floor_TB2_Show.setChecked(False))
+        self.reset_TB2.clicked.connect(lambda: self.kinect_TB2_Show.setChecked(False))
+        self.reset_TB2.clicked.connect(lambda: self.camera_TB2_Show.setChecked(False))
+        self.reset_TB2.clicked.connect(lambda: self.linear_TB2_Value.display(0))
+        self.reset_TB2.clicked.connect(lambda: self.angular_TB2_Value.display(0))
+        self.reset_TB2.clicked.connect(lambda: self.x_TB2_Value.display(0))
+        self.reset_TB2.clicked.connect(lambda: self.y_TB2_Value.display(0))
+        self.reset_TB2.clicked.connect(lambda: self.turtleBat_TB2_Value.display(0))
+        self.reset_TB2.clicked.connect(lambda: self.noteBat_TB2_Value.display(0))
+        # TB3 Reset Screen
+        self.reset_TB3.clicked.connect(lambda: self.gmapp_TB3_Show.setChecked(False))
+        self.reset_TB3.clicked.connect(lambda: self.floor_TB3_Show.setChecked(False))
+        self.reset_TB3.clicked.connect(lambda: self.kinect_TB3_Show.setChecked(False))
+        self.reset_TB3.clicked.connect(lambda: self.camera_TB3_Show.setChecked(False))
+        self.reset_TB3.clicked.connect(lambda: self.linear_TB3_Value.display(0))
+        self.reset_TB3.clicked.connect(lambda: self.angular_TB3_Value.display(0))
+        self.reset_TB3.clicked.connect(lambda: self.x_TB3_Value.display(0))
+        self.reset_TB3.clicked.connect(lambda: self.y_TB3_Value.display(0))
+        self.reset_TB3.clicked.connect(lambda: self.turtleBat_TB3_Value.display(0))
+        self.reset_TB3.clicked.connect(lambda: self.noteBat_TB3_Value.display(0))
+        # TB4 Reset Screen
+        self.reset_TB4.clicked.connect(lambda: self.gmapp_TB4_Show.setChecked(False))
+        self.reset_TB4.clicked.connect(lambda: self.floor_TB4_Show.setChecked(False))
+        self.reset_TB4.clicked.connect(lambda: self.kinect_TB4_Show.setChecked(False))
+        self.reset_TB4.clicked.connect(lambda: self.camera_TB4_Show.setChecked(False))
+        self.reset_TB4.clicked.connect(lambda: self.linear_TB4_Value.display(0))
+        self.reset_TB4.clicked.connect(lambda: self.angular_TB4_Value.display(0))
+        self.reset_TB4.clicked.connect(lambda: self.x_TB4_Value.display(0))
+        self.reset_TB4.clicked.connect(lambda: self.y_TB4_Value.display(0))
+        self.reset_TB4.clicked.connect(lambda: self.turtleBat_TB4_Value.display(0))
+        self.reset_TB4.clicked.connect(lambda: self.noteBat_TB4_Value.display(0))
+        # Configuration Reset Button
+        
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB1_Selection.setAutoExclusive(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB1_Selection.setChecked(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB2_Selection.setAutoExclusive(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB2_Selection.setChecked(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB3_Selection.setAutoExclusive(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB3_Selection.setChecked(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB4_Selection.setAutoExclusive(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB4_Selection.setChecked(False))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_Selection_Type.setCurrentIndex(0))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_Selection_Role.setCurrentIndex(0))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_Selection_Task.setCurrentIndex(0))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_Selection_Behavior.setCurrentIndex(0))
+        self.reset_Selection_Values.clicked.connect(lambda: self.robot_Selection_Experiment.setCurrentIndex(0))
         self.qrcode_App_Button.clicked.connect(MainWindow.show)
         self.data_Button.clicked.connect(MainWindow.show)
         self.logs_TB4_Button.clicked.connect(self.logs_TB4_Button.show)
@@ -1369,7 +1401,6 @@ class Ui_MainWindow(object):
         self.configure_TB3_Button.clicked['bool'].connect(self.configure_TB3_Button.show)
         self.logs_TB1_Button.clicked.connect(self.logs_TB1_Button.show)
         self.configure_TB1_Button.clicked.connect(self.configure_TB1_Button.show)
-        self.reset_Selection_Values.clicked.connect(self.robot_TB1_Selection.toggle)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1541,6 +1572,149 @@ class Ui_MainWindow(object):
         self.viewer_TB4.setTabText(self.viewer_TB4.indexOf(self.gmapp_TB4_Screen), _translate("MainWindow", "GMAPP"))
         self.viewer_TB4.setTabText(self.viewer_TB4.indexOf(self.floor_TB4_Screen), _translate("MainWindow", "FLOOR"))
         self.viewer_TB4.setTabText(self.viewer_TB4.indexOf(self.camera_TB4_Screen), _translate("MainWindow", "CAMERA"))
+
+
+class operationSucess(QtWidgets.QWidget):
+    """
+    Sucess Dialog Button
+    """
+    def __init__(self, parent=None):
+        Error = QtWidgets.QMessageBox()
+        Error.setText('Os dados foram salvos com sucesso!')
+        Error.setIcon(QtWidgets.QMessageBox.Information)
+        Error.setWindowTitle('ROC - Information')
+        Error.show()
+        Error.exec_()
+
+
+class operationError(QtWidgets.QWidget):
+    """
+    Sucess Dialog Button
+    """
+    def __init__(self, parent=None):
+        Error = QtWidgets.QMessageBox()
+        Error.setText('Um erro inesperado ocorreu!')
+        Error.setIcon(QtWidgets.QMessageBox.Warning)
+        Error.setWindowTitle('ROC - Information')
+        Error.show()
+        Error.exec_()
+
+
+class InProgress(QtWidgets.QWidget):
+    """
+    In Progress Dialog Button
+    """
+    def __init__(self, parent=None):
+        Error = QtWidgets.QMessageBox()
+        Error.setText('Desculpe, opção em desenvolvimento.')
+        Error.setIcon(QtWidgets.QMessageBox.Information)
+        Error.setWindowTitle('ROC - Information')
+        Error.show()
+        Error.exec_()
+
+
+class embeddedTerminal(QtWidgets.QWidget):
+    """
+    Starts an Embeddet urxvt-unicode terminal in the ROC
+
+    """
+    def __init__(self, parent=None):
+        """
+        Opens an new urxvt process inside the TabWidget
+        on the botton of the application.
+
+        """
+        super(embeddedTerminal, self).__init__(parent)
+        self.process = QtCore.QProcess(self)
+        self.urxvtTerminal = QtWidgets.QWidget(self)
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.urxvtTerminal)
+        # Works also with urxvt:
+        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
+        self.setGeometry(90, 460, 1160, 125)
+
+
+class robotOneTerminal(QtWidgets.QWidget):
+    """
+    Starts an Embeddet urxvt-unicode terminal in the ROC
+
+    """
+    def __init__(self, parent=None):
+        """
+        Opens an new urxvt process inside the TabWidget
+        on the botton of the application.
+
+        """
+        super(robotOneTerminal, self).__init__(parent)
+        self.process = QtCore.QProcess(self)
+        self.urxvtTerminal = QtWidgets.QWidget(self)
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.urxvtTerminal)
+        # Works also with urxvt:
+        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
+        self.setGeometry(90, 460, 1160, 125)
+
+class robotTwoTerminal(QtWidgets.QWidget):
+    """
+    Starts an Embeddet urxvt-unicode terminal in the ROC
+
+    """
+    def __init__(self, parent=None):
+        """
+        Opens an new urxvt process inside the TabWidget
+        on the botton of the application.
+
+        """
+        super(robotTwoTerminal, self).__init__(parent)
+        self.process = QtCore.QProcess(self)
+        self.urxvtTerminal = QtWidgets.QWidget(self)
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.urxvtTerminal)
+        # Works also with urxvt:
+        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
+        self.setGeometry(90, 460, 1160, 125)
+
+
+class robotThreeTerminal(QtWidgets.QWidget):
+    """
+    Starts an Embeddet urxvt-unicode terminal in the ROC
+
+    """
+    def __init__(self, parent=None):
+        """
+        Opens an new urxvt process inside the TabWidget
+        on the botton of the application.
+
+        """
+        super(robotThreeTerminal, self).__init__(parent)
+        self.process = QtCore.QProcess(self)
+        self.urxvtTerminal = QtWidgets.QWidget(self)
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.urxvtTerminal)
+        # Works also with urxvt:
+        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
+        self.setGeometry(90, 460, 1160, 125)
+
+
+class robotFourTerminal(QtWidgets.QWidget):
+    """
+    Starts an Embeddet urxvt-unicode terminal in the ROC
+
+    """
+    def __init__(self, parent=None):
+        """
+        Opens an new urxvt process inside the TabWidget
+        on the botton of the application.
+
+        """
+        super(robotFourTerminal, self).__init__(parent)
+        self.process = QtCore.QProcess(self)
+        self.urxvtTerminal = QtWidgets.QWidget(self)
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.urxvtTerminal)
+        # Works also with urxvt:
+        self.process.start('urxvt', ['-embed', str(int(self.winId()))])
+        self.setGeometry(90, 460, 1160, 125)
 
 
 if __name__ == "__main__":

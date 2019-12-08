@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/python2.7
 
 # Form implementation generated from reading ui file 'tb4Settings.ui'
 #
@@ -6,8 +7,30 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+__author__ = "Ítalo Barros"
+__copyright__ = "Copyright 2019, LASER - UFPB"
+__license__ = "X11"
+__version__ = "alpha 0.1"
+__maintainer__ = "Ítalo Barros"
+__email__ = "italorenan_@hotmail.com"
+__status__ = "In Development"
+
 import vectors
 from PyQt5 import QtCore, QtGui, QtWidgets
+try:
+    import xml.etree.cElementTree as et
+except ImportError:
+    import xml.etree.ElementTree as et
+
+
+class sucessDialog(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        sucessDialog = QtWidgets.QMessageBox()
+        sucessDialog.setWindowTitle('Settings (TB2)')
+        sucessDialog.setText('As modificações foram salvas com sucesso!')
+        sucessDialog.setIcon(QtWidgets.QMessageBox.Information)
+        sucessDialog.show()
+        sucessDialog.exec_()
 
 class Ui_robotFourConfig(object):
     def setupUi(self, robotFourConfig):
@@ -68,7 +91,7 @@ class Ui_robotFourConfig(object):
         self.ros_Master_URI = QtWidgets.QLineEdit(self.settingsTB4)
         self.ros_Master_URI.setGeometry(QtCore.QRect(90, 88, 231, 23))
         self.ros_Master_URI.setStyleSheet("background: rgba(29, 222, 216, 0.1);\n"
-"color: rgb(199, 199, 199);")
+                                          "color: rgb(199, 199, 199);")
         self.ros_Master_URI.setObjectName("ros_Master_URI")
         self.sshTB4 = QtWidgets.QGroupBox(robotFourConfig)
         self.sshTB4.setGeometry(QtCore.QRect(5, 220, 326, 150))
@@ -116,6 +139,8 @@ class Ui_robotFourConfig(object):
         self.buttons_Config_TB4.setGeometry(QtCore.QRect(80, 390, 166, 24))
         self.buttons_Config_TB4.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttons_Config_TB4.setObjectName("buttons_Config_TB4")
+        self.buttons_Config_TB4.accepted.connect(self.okButton)
+
         self.my_IP_TB4_Label.setBuddy(self.ros_TB4_IP)
         self.master_IP_TB4_Label.setBuddy(self.ros_Master_IP)
         self.hostname_TB4_Label.setBuddy(self.ros_TB4_Hostname)
@@ -127,15 +152,7 @@ class Ui_robotFourConfig(object):
         self.ssh_TB4_IP_Label.setBuddy(self.ssh_TB4_IP)
 
         self.retranslateUi(robotFourConfig)
-        self.buttons_Config_TB4.accepted.connect(self.ssh_TB4_Port.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ssh_TB4_Password.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ssh_TB4_User.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ssh_TB4_IP.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ros_TB4_Namespace.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ros_TB4_Hostname.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ros_Master_URI.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ros_Master_IP.copy)
-        self.buttons_Config_TB4.accepted.connect(self.ros_TB4_IP.copy)
+        self.buttons_Config_TB4.rejected.connect(robotFourConfig.reject)
         QtCore.QMetaObject.connectSlotsByName(robotFourConfig)
 
     def retranslateUi(self, robotFourConfig):
@@ -161,6 +178,56 @@ class Ui_robotFourConfig(object):
         self.ssh_TB4_IP.setPlaceholderText(_translate("robotFourConfig", "ex.: 192.168.43.87"))
         self.ssh_Password_TB4_Label.setText(_translate("robotFourConfig", "PASSWORD:"))
         self.ssh_TB4_IP_Label.setText(_translate("robotFourConfig", "TURTLEBOT IP:"))
+
+    def okButton(self):
+        # ENV CONFIG
+        ros_TB4_IP_Value = self.ros_TB4_IP.text()
+        ros_Master_IP_Value = self.ros_Master_IP.text()
+        ros_Master_URI_Value = self.ros_Master_URI.text()
+        ros_Hostname_Value = self.ros_TB4_Hostname.text()
+        ros_TB4_Namespace_Value = self.ros_TB4_Namespace.text()
+        # SSH CONNECTION
+        ssh_TB4_IP_Value = self.ssh_TB4_IP.text()
+        ssh_TB4_User_Value = self.ssh_TB4_User.text()
+        ssh_TB4_Password_Value = self.ssh_TB4_Password.text()
+        ssh_TB4_Port_Value = self.ssh_TB4_Port.text()
+        # XML CREATION
+        environmentXMLFile = et.Element('TB4_Settings')
+        comment = et.Comment("TB4 ROS Environment and Configuration Variables")
+        environmentXMLFile.append(comment)
+        environmentConfig = et.SubElement(environmentXMLFile, 'TB4_MY_IP')
+        environmentConfig.text = str(ros_TB4_IP_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'ROS_MASTER_IP')
+        environmentConfig.text = str(ros_Master_IP_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'ROS_MASTER_URI')
+        environmentConfig.text = str(ros_Master_URI_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'TB4_ROS_HOSTNAME')
+        environmentConfig.text = str(ros_Hostname_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'TB4_ROS_NAMESPACE')
+        environmentConfig.text = str(ros_TB4_Namespace_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB4_IP')
+        environmentConfig.text = str(ssh_TB4_IP_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB4_USERNAME')
+        environmentConfig.text = str(ssh_TB4_User_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB4_PASSWORD')
+        environmentConfig.text = str(ssh_TB4_Password_Value)
+        environmentConfig = et.SubElement(environmentXMLFile, 'SSH_TB4_PORT')
+        environmentConfig.text = str(ssh_TB4_Port_Value)
+        tree = et.ElementTree(environmentXMLFile)
+        tree.write('tb4Settings.xml', encoding='utf8')
+        # CHANGE THE PLACEHOLDER
+        _translate = QtCore.QCoreApplication.translate
+        self.ros_TB4_IP.setPlaceholderText(_translate("robotFourConfig", ros_TB4_IP_Value))
+        self.ros_Master_IP.setPlaceholderText(_translate("robotFourConfig", ros_Master_IP_Value))
+        self.ros_Master_URI.setPlaceholderText(_translate("robotFourConfig", ros_Master_URI_Value))
+        self.ros_TB4_Hostname.setPlaceholderText(_translate("robotFourConfig", ros_Hostname_Value))
+        self.ros_TB4_Namespace.setPlaceholderText(_translate("robotFourConfig", ros_TB4_Namespace_Value))
+        self.ssh_TB4_IP.setPlaceholderText(_translate("robotFourConfig", ssh_TB4_IP_Value))
+        self.ssh_TB4_User.setPlaceholderText(_translate("robotFourConfig", ssh_TB4_User_Value))
+        self.ssh_TB4_Password.setPlaceholderText(_translate("robotFourConfig", ssh_TB4_Password_Value))
+        self.ssh_TB4_Port.setPlaceholderText(_translate("robotFourConfig", ssh_TB4_Port_Value))
+        sucessDialog()
+
 
 if __name__ == "__main__":
     import sys

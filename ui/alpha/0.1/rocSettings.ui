@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>rocConfigure</class>
+ <widget class="QDialog" name="rocConfigure">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>340</width>
+    <height>426</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>340</width>
+    <height>426</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>340</width>
+    <height>426</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Settings and Configurations</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../images/vectors/vectors.qrc">
+    <normaloff>:/vectors/Conection.png</normaloff>:/vectors/Conection.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: #2A2E37;</string>
+  </property>
+  <widget class="QGroupBox" name="rosSettingsROC">
+   <property name="geometry">
+    <rect>
+     <x>7</x>
+     <y>200</y>
+     <width>326</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>320</width>
+     <height>140</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="title">
+    <string>ROC Environment Variables:</string>
+   </property>
+   <widget class="QLineEdit" name="my_IP_ROC">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>30</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>ex.:192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="master_IP_ROC">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>60</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);
+background: rgba(29, 222, 216, 0.1);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: 192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="hostname_ROC">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>118</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.:192.168.43.87</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="namespace_ROC">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>148</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: robot_0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="my_IP_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>32</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>ROS_MY_IP:</string>
+    </property>
+    <property name="buddy">
+     <cstring>my_IP_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="master_IP_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>62</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>MASTER_IP:</string>
+    </property>
+    <property name="buddy">
+     <cstring>master_IP_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="hostname_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>120</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>HOSTNAME:</string>
+    </property>
+    <property name="buddy">
+     <cstring>hostname_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="namespace_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>150</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>NAMESPACE:</string>
+    </property>
+    <property name="buddy">
+     <cstring>namespace_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="master_URI_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>MASTER_URI:</string>
+    </property>
+    <property name="buddy">
+     <cstring>master_URI_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="master_URI_ROC">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>88</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: http://localhost:11311</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="connectionROC">
+   <property name="geometry">
+    <rect>
+     <x>7</x>
+     <y>10</y>
+     <width>326</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(14, 172, 186);</string>
+   </property>
+   <property name="title">
+    <string>Connection Setup</string>
+   </property>
+   <widget class="QLineEdit" name="user_ROC">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>58</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: turtlebot</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="password_ROC">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>88</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: turtlebot</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="port_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>120</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>PORT:</string>
+    </property>
+    <property name="buddy">
+     <cstring>port_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="port_ROC">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>118</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: 80</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="user_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>60</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>USER:</string>
+    </property>
+    <property name="buddy">
+     <cstring>user_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="password_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>PASSWORD:</string>
+    </property>
+    <property name="buddy">
+     <cstring>password_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="key_ROC">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>148</y>
+      <width>210</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgba(29, 222, 216, 0.1);
+color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>KEY</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+    </property>
+    <property name="placeholderText">
+     <string>ex.: 80</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="key_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>150</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>KEY:</string>
+    </property>
+    <property name="buddy">
+     <cstring>port_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="type_ROC_Label">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>30</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <property name="text">
+     <string>TYPE:</string>
+    </property>
+    <property name="buddy">
+     <cstring>user_ROC</cstring>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="type_ROC">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>28</y>
+      <width>211</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(199, 199, 199);</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>DEFAULT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>IP/UTP</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>CLOUD</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttons_Config_ROC">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>393</y>
+     <width>166</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../../images/vectors/vectors.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>namespace_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>187</x>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>hostname_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>master_URI_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>402</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>176</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>master_IP_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>179</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>my_IP_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>password_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>port_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>241</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>accepted()</signal>
+   <receiver>user_ROC</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttons_Config_ROC</sender>
+   <signal>rejected()</signal>
+   <receiver>rocConfigure</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>59</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rocConfigure</sender>
+   <signal>accepted()</signal>
+   <receiver>rocConfigure</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>405</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
