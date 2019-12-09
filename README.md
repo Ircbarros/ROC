@@ -1,2 +1,2 @@
 # RoC
-The Open Source Robot Operational Controller for multi-robot system Supervisory
+The Open Source Robot Operational Controller for multi-robot systems
