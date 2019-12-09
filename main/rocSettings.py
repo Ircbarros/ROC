@@ -278,9 +278,9 @@ class Ui_rocConfigure(object):
         # Export the values to "~/.bashrc"
         exportMyIPCommand = str("echo "+exportMyIP+" >> ~/.bashrc")
         exportMasterIPCommand = str("echo "+exportMasterIP+" >> ~/.bashrc")
-        exportIPURICommand = str("echo '"+'"'+exportMasterIPURI+'"'+" >> ~/.bashrc")
+        exportIPURICommand = str("echo "+'"'+exportMasterIPURI+'"'+" >> ~/.bashrc")
         exportHostnameCommand = str("echo "+exportHostname+" >> ~/.bashrc")
-        exportNamespaceCommand = str("echo '"+'"'+exportNamespace+'"'+" >> ~/.bashrc")
+        exportNamespaceCommand = str("echo "+'"'+exportNamespace+'"'+" >> ~/.bashrc")
 
         # print(exportMyIPCommand)
         # print(exportMasterIPCommand)

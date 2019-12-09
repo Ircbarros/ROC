@@ -20,10 +20,20 @@ import webbrowser
 import paramiko
 import sendFiles
 import killRobot
+import tb1Subscriber
+import tb2Subscriber
+import tb3Subscriber
+import tb4Subscriber
+import os
 import cv2
+import time
+import traceback
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
 from qrApp import Ui_qrReaderApp
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 from tb1Settings import Ui_robotOneConfig
 from tb1Settings import Ui_robotOneConfig
 from tb2Settings import Ui_robotTwoConfig
@@ -40,6 +50,39 @@ except ImportError:
 
 # Global Variables
 robot_Selected_Value = 'None'
+
+
+class tb1Worker(QRunnable):
+    """ Worker Thread """
+
+    @pyqtSlot()
+    def run(self):
+
+        os.system("python2 tb1Subscriber.py")
+
+class tb2Worker(QRunnable):
+    """ Worker Thread """
+
+    @pyqtSlot()
+    def run(self):
+
+        os.system("python2 tb2Subscriber.py")
+
+class tb3Worker(QRunnable):
+    """ Worker Thread """
+
+    @pyqtSlot()
+    def run(self):
+
+        os.system("python2 tb3Subscriber.py")
+
+class tb4Worker(QRunnable):
+    """ Worker Thread """
+
+    @pyqtSlot()
+    def run(self):
+
+        os.system("python2 tb4Subscriber.py")
 
 
 class Ui_MainWindow(object):
@@ -237,6 +280,105 @@ class Ui_MainWindow(object):
                 self.terminalWidget.insertTab(4, robotFourTerminal(), icon6, "Robot 4")
             else:
                 self.terminalWidget.removeTab(4)
+    
+    def startSubscribers(self):
+        """ Function to Start the Subscribers """
+        if (self.on_TB1_Viewer.isChecked()):
+            self.threadpool = QThreadPool()
+            worker = tb1Worker()
+            self.threadpool.start(worker)
+        
+        elif (self.on_TB2_Viewer.isChecked()):
+            self.threadpool = QThreadPool()
+            worker = tb2Worker()
+            self.threadpool.start(worker)
+        
+        elif (self.on_TB3_Viewer.isChecked()):
+            self.threadpool = QThreadPool()
+            worker = tb3Worker()
+            self.threadpool.start(worker)
+        
+        elif (self.on_TB4_Viewer.isChecked()):
+            self.threadpool = QThreadPool()
+            worker = tb4Worker()
+            self.threadpool.start(worker)
+
+    def killSubscribers(self):
+        """ Function to Start the Subscribers """
+        if (self.off_TB1_Viewer.isChecked()):
+            pass
+
+    def cameraTB1Checked(self, state):
+        """ Function to Show the Robot TB1 Depth Camera """
+        if state == QtCore.Qt.Checked:
+            print('Show Camera TB1 Selected')
+            # release video capture
+            self.cap = cv2.VideoCapture(0)
+            # # read image in BGR format
+            # ret, img = self.cap.read()
+            # image = QtGui.QImage(img, img.shape[1], img.shape[0],
+            #                     img.shape[1] * img.shape[2],
+            #                     QtGui.QImage.Format_RGB888)
+            pixmapCamera = QtGui.QPixmap()
+            pixmapCamera.convertFromImage(tb1Subscriber.callback.rgb_image())
+            self.simulationWidget.setPixmap(pixmapCamera)
+        else:
+            print('Show Camera TB1 Unchecked')
+            # self.cap.release()
+
+    def kinnectTB1Checked(self, state):
+        """ Function to Show the Robot TB1 Camera """
+        if state == QtCore.Qt.Checked:
+            print('Show TB1 Kinnect Selected')
+            # # release video capture
+            # self.cap = cv2.VideoCapture(0)
+            # # read image in BGR format
+            # ret, img = self.cap.read()
+            # image = QtGui.QImage(img, img.shape[1], img.shape[0],
+            #                      img.shape[1] * img.shape[2],
+            #                      QtGui.QImage.Format_RGB888)
+            # pixmap = QtGui.QPixmap()
+            # pixmap.convertFromImage(image.rgbSwapped())
+            # self.simulationWidget.setPixmap(pixmap)
+        else:
+            print('Hide Kinnect TB1 Unchecked')
+            # self.cap.release()
+
+    def gmappTB1Checked(self, state):
+        """ Function to Show the Robot TB1 Camera """
+        if state == QtCore.Qt.Checked:
+            print('Show GMAPP TB1 Selected')
+            # # release video capture
+            # self.cap = cv2.VideoCapture(0)
+            # # read image in BGR format
+            # ret, img = self.cap.read()
+            # image = QtGui.QImage(img, img.shape[1], img.shape[0],
+            #                      img.shape[1] * img.shape[2],
+            #                      QtGui.QImage.Format_RGB888)
+            # pixmap = QtGui.QPixmap()
+            # pixmap.convertFromImage(image.rgbSwapped())
+            # self.simulationWidget.setPixmap(pixmap)
+        else:
+            print('Show GMAPP TB1 Unchecked')
+            # self.cap.release()
+
+    def floorTB1Checked(self, state):
+        """ Function to Show the Robot TB1 Camera """
+        if state == QtCore.Qt.Checked:
+            print('Show TB1 Floor Selected')
+            # # release video capture
+            # self.cap = cv2.VideoCapture(0)
+            # # read image in BGR format
+            # ret, img = self.cap.read()
+            # image = QtGui.QImage(img, img.shape[1], img.shape[0],
+            #                      img.shape[1] * img.shape[2],
+            #                      QtGui.QImage.Format_RGB888)
+            # pixmap = QtGui.QPixmap()
+            # pixmap.convertFromImage(image.rgbSwapped())
+            # self.simulationWidget.setPixmap(pixmap)
+        else:
+            print('Hide TB1 Floor Selected')
+            # self.cap.release()
 
     def setupUi(self, MainWindow):
         """ Here starts the Main Code and Definitions for The Base Applicaton """
@@ -443,6 +585,7 @@ class Ui_MainWindow(object):
         self.robot_TB1_Status.setStyleSheet("color: rgb(193, 69, 69);\n"
                                             "font: 7pt \"Khmer OS\";")
         self.robot_TB1_Status.setObjectName("robot_TB1_Status")
+        self.robot_TB1_Status.clicked.connect(InProgress)
        # Robot TB2 Status Button
         self.robot_TB2_Status = QtWidgets.QPushButton(self.robotViewerBase)
         self.robot_TB2_Status.setGeometry(QtCore.QRect(120, 36, 90, 18))
@@ -451,6 +594,7 @@ class Ui_MainWindow(object):
         self.robot_TB2_Status.setStyleSheet("color: rgb(193, 69, 69);\n"
                                             "font: 7pt \"Khmer OS\";")
         self.robot_TB2_Status.setObjectName("robot_TB2_Status")
+        self.robot_TB2_Status.clicked.connect(InProgress)
         # Robot TB3 Status Button
         self.robot_TB3_Status = QtWidgets.QPushButton(self.robotViewerBase)
         self.robot_TB3_Status.setGeometry(QtCore.QRect(120, 56, 90, 18))
@@ -459,6 +603,7 @@ class Ui_MainWindow(object):
         self.robot_TB3_Status.setStyleSheet("color: rgb(193, 69, 69);\n"
                                             "font: 7pt \"Khmer OS\";")
         self.robot_TB3_Status.setObjectName("robot_TB3_Status")
+        self.robot_TB3_Status.clicked.connect(InProgress)
         # Robot TB4 Status Button
         self.robot_TB4_Status = QtWidgets.QPushButton(self.robotViewerBase)
         self.robot_TB4_Status.setGeometry(QtCore.QRect(120, 76, 90, 18))
@@ -467,6 +612,7 @@ class Ui_MainWindow(object):
         self.robot_TB4_Status.setStyleSheet("color: rgb(193, 69, 69);\n"
                                             "font: 7pt \"Khmer OS\";")
         self.robot_TB4_Status.setObjectName("robot_TB4_Status")
+        self.robot_TB4_Status.clicked.connect(InProgress)
         # Robot TB1 Main Widget
         self.robot_TB1 = QtWidgets.QGroupBox(self.mainWindowBase)
         self.robot_TB1.setEnabled(True)
@@ -504,39 +650,52 @@ class Ui_MainWindow(object):
         self.logs_TB1_Button.setStyleSheet("background: rgba(29, 222, 216, 0.1);\n"
                                            "color: rgb(22, 22, 22)")
         self.logs_TB1_Button.setObjectName("logs_TB1_Button")
+        # TB1 Floor Checkbox
         self.floor_TB1_Show = QtWidgets.QCheckBox(self.options_TB1)
         self.floor_TB1_Show.setGeometry(QtCore.QRect(10, 30, 61, 21))
         self.floor_TB1_Show.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.floor_TB1_Show.setToolTipDuration(3000)
         self.floor_TB1_Show.setStyleSheet("color: white;")
         self.floor_TB1_Show.setObjectName("floor_TB1_Show")
+        self.floor_TB1_Show.stateChanged.connect(self.floorTB1Checked)
+        # TB1 Kinnect Checkbox
         self.kinect_TB1_Show = QtWidgets.QCheckBox(self.options_TB1)
         self.kinect_TB1_Show.setGeometry(QtCore.QRect(10, 50, 71, 21))
         self.kinect_TB1_Show.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.kinect_TB1_Show.setToolTipDuration(3000)
         self.kinect_TB1_Show.setStyleSheet("color: white;")
         self.kinect_TB1_Show.setObjectName("kinect_TB1_Show")
+        self.kinect_TB1_Show.stateChanged.connect(self.kinnectTB1Checked)
+        # TB1 Gmapp Checkbox
         self.gmapp_TB1_Show = QtWidgets.QCheckBox(self.options_TB1)
         self.gmapp_TB1_Show.setGeometry(QtCore.QRect(10, 10, 71, 21))
         self.gmapp_TB1_Show.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.gmapp_TB1_Show.setToolTipDuration(3000)
         self.gmapp_TB1_Show.setStyleSheet("color: white;")
         self.gmapp_TB1_Show.setObjectName("gmapp_TB1_Show")
+        self.gmapp_TB1_Show.stateChanged.connect(self.gmappTB1Checked)
+        # TB1 Camera Checkbox
         self.camera_TB1_Show = QtWidgets.QCheckBox(self.options_TB1)
         self.camera_TB1_Show.setGeometry(QtCore.QRect(10, 70, 71, 21))
         self.camera_TB1_Show.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.camera_TB1_Show.setStyleSheet("color: white;")
         self.camera_TB1_Show.setObjectName("camera_TB1_Show")
+        self.camera_TB1_Show.stateChanged.connect(self.cameraTB1Checked)
+        # TB1 ON Radio Button
         self.on_TB1_Viewer = QtWidgets.QRadioButton(self.options_TB1)
         self.on_TB1_Viewer.setGeometry(QtCore.QRect(100, 10, 51, 21))
         self.on_TB1_Viewer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.on_TB1_Viewer.setToolTipDuration(3000)
         self.on_TB1_Viewer.setObjectName("on_TB1_Viewer")
+        self.on_TB1_Viewer.toggled.connect(self.startSubscribers)
+        # TB1 OFF Radio Button
         self.off_TB1_Viewer = QtWidgets.QRadioButton(self.options_TB1)
         self.off_TB1_Viewer.setGeometry(QtCore.QRect(160, 10, 51, 21))
         self.off_TB1_Viewer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.off_TB1_Viewer.setToolTipDuration(3000)
         self.off_TB1_Viewer.setObjectName("off_TB1_Viewer")
+        self.off_TB1_Viewer.toggled.connect(self.killSubscribers)
+        # TB1 Secondary Design
         self.line_TB1_2 = QtWidgets.QFrame(self.options_TB1)
         self.line_TB1_2.setGeometry(QtCore.QRect(100, 35, 110, 1))
         self.line_TB1_2.setStyleSheet("")
@@ -563,7 +722,7 @@ class Ui_MainWindow(object):
         self.line_TB1_3.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_TB1_3.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_TB1_3.setObjectName("line_TB1_3")
-        #
+        # TB1 RESET Button
         self.reset_TB1 = QtWidgets.QPushButton(self.options_TB1)
         self.reset_TB1.setGeometry(QtCore.QRect(15, 162, 90, 20))
         self.reset_TB1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -579,6 +738,7 @@ class Ui_MainWindow(object):
         self.valuesTB1Frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.valuesTB1Frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.valuesTB1Frame.setObjectName("valuesTB1Frame")
+        # TB1 Robot Values
         self.x_TB1_Value = QtWidgets.QLCDNumber(self.valuesTB1Frame)
         self.x_TB1_Value.setGeometry(QtCore.QRect(30, 7, 31, 16))
         self.x_TB1_Value.setObjectName("x_TB1_Value")
@@ -632,18 +792,22 @@ class Ui_MainWindow(object):
         self.viewer_TB1.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.viewer_TB1.setElideMode(QtCore.Qt.ElideLeft)
         self.viewer_TB1.setObjectName("viewer_TB1")
+        # Kinnect TB1 Screen
         self.kinnect_TB1_Screen = QtWidgets.QWidget()
         self.kinnect_TB1_Screen.setObjectName("kinnect_TB1_Screen")
         self.viewer_TB1.addTab(self.kinnect_TB1_Screen, "")
-        self.gmapp_TB1_Screen = QtWidgets.QWidget()
-        self.gmapp_TB1_Screen.setObjectName("gmapp_TB1_Screen")
-        self.viewer_TB1.addTab(self.gmapp_TB1_Screen, "")
-        self.floor_TB1_Screen = QtWidgets.QWidget()
-        self.floor_TB1_Screen.setObjectName("floor_TB1_Screen")
-        self.viewer_TB1.addTab(self.floor_TB1_Screen, "")
+        # Camera TB1 Screen
         self.camera_TB1_Screen = QtWidgets.QWidget()
         self.camera_TB1_Screen.setObjectName("camera_TB1_Screen")
         self.viewer_TB1.addTab(self.camera_TB1_Screen, "")
+        # GMAPP TB1 Screen
+        self.gmapp_TB1_Screen = QtWidgets.QWidget()
+        self.gmapp_TB1_Screen.setObjectName("gmapp_TB1_Screen")
+        self.viewer_TB1.addTab(self.gmapp_TB1_Screen, "")
+        # Floor TB1 Screen
+        self.floor_TB1_Screen = QtWidgets.QWidget()
+        self.floor_TB1_Screen.setObjectName("floor_TB1_Screen")
+        self.viewer_TB1.addTab(self.floor_TB1_Screen, "")
         self.robot_Selection_Frame = QtWidgets.QFrame(self.mainWindowBase)
         self.robot_Selection_Frame.setGeometry(QtCore.QRect(1063, 208, 218, 30))
         self.robot_Selection_Frame.setStyleSheet("background: rgba(29, 222, 216, 0.1);")
@@ -948,18 +1112,22 @@ class Ui_MainWindow(object):
         self.viewer_TB2.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.viewer_TB2.setElideMode(QtCore.Qt.ElideLeft)
         self.viewer_TB2.setObjectName("viewer_TB2")
+        # Kinnect TB2 Screen
         self.kinnect_TB2_Screen = QtWidgets.QWidget()
         self.kinnect_TB2_Screen.setObjectName("kinnect_TB2_Screen")
         self.viewer_TB2.addTab(self.kinnect_TB2_Screen, "")
-        self.gmapp_TB2_Screen = QtWidgets.QWidget()
-        self.gmapp_TB2_Screen.setObjectName("gmapp_TB2_Screen")
-        self.viewer_TB2.addTab(self.gmapp_TB2_Screen, "")
-        self.floor_TB2_Screen = QtWidgets.QWidget()
-        self.floor_TB2_Screen.setObjectName("floor_TB2_Screen")
-        self.viewer_TB2.addTab(self.floor_TB2_Screen, "")
+        # Camera TB2 Screen
         self.camera_TB2_Screen = QtWidgets.QWidget()
         self.camera_TB2_Screen.setObjectName("camera_TB2_Screen")
         self.viewer_TB2.addTab(self.camera_TB2_Screen, "")
+        # GMAPP TB2 Screen
+        self.gmapp_TB2_Screen = QtWidgets.QWidget()
+        self.gmapp_TB2_Screen.setObjectName("gmapp_TB2_Screen")
+        self.viewer_TB2.addTab(self.gmapp_TB2_Screen, "")
+        # FLOOR TB2 Screen
+        self.floor_TB2_Screen = QtWidgets.QWidget()
+        self.floor_TB2_Screen.setObjectName("floor_TB2_Screen")
+        self.viewer_TB2.addTab(self.floor_TB2_Screen, "")
         self.label = QtWidgets.QLabel(self.mainWindowBase)
         self.label.setGeometry(QtCore.QRect(25, 570, 71, 16))
         self.label.setToolTipDuration(3000)
@@ -1118,18 +1286,22 @@ class Ui_MainWindow(object):
         self.viewer_TB3.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.viewer_TB3.setElideMode(QtCore.Qt.ElideLeft)
         self.viewer_TB3.setObjectName("viewer_TB3")
+        # Kinnect TB3 Screen
         self.kinnect_TB3_Screen = QtWidgets.QWidget()
         self.kinnect_TB3_Screen.setObjectName("kinnect_TB3_Screen")
         self.viewer_TB3.addTab(self.kinnect_TB3_Screen, "")
-        self.gmapp_TB3_Screen = QtWidgets.QWidget()
-        self.gmapp_TB3_Screen.setObjectName("gmapp_TB3_Screen")
-        self.viewer_TB3.addTab(self.gmapp_TB3_Screen, "")
-        self.floor_TB3_Screen = QtWidgets.QWidget()
-        self.floor_TB3_Screen.setObjectName("floor_TB3_Screen")
-        self.viewer_TB3.addTab(self.floor_TB3_Screen, "")
+        # Camera TB3 Screen
         self.camera_TB3_Screen = QtWidgets.QWidget()
         self.camera_TB3_Screen.setObjectName("camera_TB3_Screen")
         self.viewer_TB3.addTab(self.camera_TB3_Screen, "")
+        # GMAPP TB3 Screen
+        self.gmapp_TB3_Screen = QtWidgets.QWidget()
+        self.gmapp_TB3_Screen.setObjectName("gmapp_TB3_Screen")
+        self.viewer_TB3.addTab(self.gmapp_TB3_Screen, "")
+        # Floor TB3 Screen
+        self.floor_TB3_Screen = QtWidgets.QWidget()
+        self.floor_TB3_Screen.setObjectName("floor_TB3_Screen")
+        self.viewer_TB3.addTab(self.floor_TB3_Screen, "")
         self.robot_TB4 = QtWidgets.QGroupBox(self.mainWindowBase)
         self.robot_TB4.setGeometry(QtCore.QRect(610, 235, 439, 219))
         self.robot_TB4.setStyleSheet("\n"
@@ -1282,18 +1454,22 @@ class Ui_MainWindow(object):
         self.viewer_TB4.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.viewer_TB4.setElideMode(QtCore.Qt.ElideLeft)
         self.viewer_TB4.setObjectName("viewer_TB4")
+        # Kinnect TB4 Screen
         self.kinnect_TB4_Screen = QtWidgets.QWidget()
         self.kinnect_TB4_Screen.setObjectName("kinnect_TB4_Screen")
         self.viewer_TB4.addTab(self.kinnect_TB4_Screen, "")
-        self.gmapp_TB4_Screen = QtWidgets.QWidget()
-        self.gmapp_TB4_Screen.setObjectName("gmapp_TB4_Screen")
-        self.viewer_TB4.addTab(self.gmapp_TB4_Screen, "")
-        self.floor_TB4_Screen = QtWidgets.QWidget()
-        self.floor_TB4_Screen.setObjectName("floor_TB4_Screen")
-        self.viewer_TB4.addTab(self.floor_TB4_Screen, "")
+        # Camera TB4 Screen
         self.camera_TB4_Screen = QtWidgets.QWidget()
         self.camera_TB4_Screen.setObjectName("camera_TB4_Screen")
         self.viewer_TB4.addTab(self.camera_TB4_Screen, "")
+        # GMAPP TB4 Screen
+        self.gmapp_TB4_Screen = QtWidgets.QWidget()
+        self.gmapp_TB4_Screen.setObjectName("gmapp_TB4_Screen")
+        self.viewer_TB4.addTab(self.gmapp_TB4_Screen, "")
+        # Floor TB4 Screen
+        self.floor_TB4_Screen = QtWidgets.QWidget()
+        self.floor_TB4_Screen.setObjectName("floor_TB4_Screen")
+        self.viewer_TB4.addTab(self.floor_TB4_Screen, "")
         self.robot_TB1.raise_()
         self.menuFrame.raise_()
         self.menu_Logo.raise_()
@@ -1385,7 +1561,6 @@ class Ui_MainWindow(object):
         self.reset_TB4.clicked.connect(lambda: self.turtleBat_TB4_Value.display(0))
         self.reset_TB4.clicked.connect(lambda: self.noteBat_TB4_Value.display(0))
         # Configuration Reset Button
-        
         self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB1_Selection.setAutoExclusive(False))
         self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB1_Selection.setChecked(False))
         self.reset_Selection_Values.clicked.connect(lambda: self.robot_TB2_Selection.setAutoExclusive(False))

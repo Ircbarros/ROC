@@ -80,7 +80,7 @@ def sshSendFiles():
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(hostname=ssh_IP, username=ssh_USER, password=ssh_PASSWORD)
     ftp_client = ssh_client.open_sftp()
-    ftp_client.put('~/Desktop/RoC/main/experimentConfig.xml', '~/var/temp')
+    ftp_client.put('~/Desktop/RoC/main/experimentConfig.xml', '~/var/roc')
     ftp_client.close()
 
 if __name__ == "__main__":
