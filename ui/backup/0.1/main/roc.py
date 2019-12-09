@@ -18,9 +18,6 @@ __status__ = "In Development"
 import vectors
 import webbrowser
 import paramiko
-import sendFiles
-import killRobot
-import cv2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
 from qrApp import Ui_qrReaderApp
@@ -85,9 +82,8 @@ class Ui_MainWindow(object):
             try:
                 tree = et.ElementTree(environmentXMLFile)
                 tree.write('experimentConfig.xml', encoding='utf8')
-                sendFiles.sshSendFiles()
                 operationSucess()
-            except Exception:
+            except:
                 operationError()
 
 
@@ -143,11 +139,11 @@ class Ui_MainWindow(object):
     def mainWebActions(self, **kwargs):
         """ Responsible to Handle all the Buttons that lead to an web page """
         # If the dictionary item value is the required opens the webpage
-        if kwargs['button']=='docs':
+        if kwargs['button']=='tiago':
             # Only 1 click at every 5 seconds
-            self.docs_Button.setDown(True)
-            QTimer.singleShot(5000, lambda: self.docs_Button.setDown(False))
-            webbrowser.open('https://italorenan.gitbook.io/roc/')
+            self.tiago_Contact.setDown(True)
+            QTimer.singleShot(5000, lambda: self.tiago_Contact.setDown(False))
+            webbrowser.open('https://sites.google.com/view/tiagopn/')
 
     def buttonStatusChange(self,**kwargs):
         """ Responsible to Handle the Status Buttons Color Change """
@@ -188,10 +184,9 @@ class Ui_MainWindow(object):
                 self.robot_TB4_Status.setStyleSheet("color: rgb(193, 69, 69);\n"
                                                     "font: 7pt \"Khmer OS\";")
         
-    def killExperiment(self, **kwargs):
-        """ Responsible to kill the Experiment """
-        if kwargs['kill']=='YES':
-            killRobot.sshKill()
+    def resetButtons(self, **kwargs):
+        """ Responsible to Handle the RESET Buttons Actions """
+        pass
     
     def robotsTerminals(self, **kwargs):
         """ Responsible to Open and Close Robot Terminals after Selection """
@@ -202,7 +197,7 @@ class Ui_MainWindow(object):
                 QTimer.singleShot(5000, lambda: self.robot_TB1_Viewer.setDown(False))
                 icon6 = QtGui.QIcon()
                 icon6.addPixmap(QtGui.QPixmap(":/vectors/ShellWhite.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                self.terminalWidget.insertTab(1, robotOneTerminal(), icon6, "Robot 1")
+                self.terminalWidget.insertTab(0, robotOneTerminal(), icon6, "Robot 1")
                 index = self.terminalWidget.indexOf(self.terminalWidget)
                 print(index)
             else:
@@ -335,7 +330,6 @@ class Ui_MainWindow(object):
         self.docs_Button.setIcon(icon4)
         self.docs_Button.setIconSize(QtCore.QSize(40, 32))
         self.docs_Button.setObjectName("docs_Button")
-        self.docs_Button.clicked.connect(lambda: self.mainWebActions(button='docs'))
         # About Button
         self.about_Button = QtWidgets.QCommandLinkButton(self.mainWindowBase)
         self.about_Button.setGeometry(QtCore.QRect(1180, 15, 91, 50))
@@ -788,7 +782,7 @@ class Ui_MainWindow(object):
                                                  "font: 7pt \"Khmer OS\";\n"
                                                  "background-color: rgb(107, 21, 18);")
         self.down_Selection_Values.setObjectName("down_Selection_Values")
-        self.down_Selection_Values.clicked.connect(lambda: self.killExperiment(kill='yes'))
+        self.down_Selection_Values.clicked.connect(InProgress)
         # Selection Section Design
         self.selection_Superior_Line = QtWidgets.QFrame(self.mainWindowBase)
         self.selection_Superior_Line.setGeometry(QtCore.QRect(1061, 205, 220, 3))

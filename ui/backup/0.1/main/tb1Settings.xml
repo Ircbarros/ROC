@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf8'?>
+<TB1_Settings><!--TB1 ROS Environment and Configuration Variables--><TB1_MY_IP /><ROS_MASTER_IP /><ROS_MASTER_URI /><TB1_ROS_HOSTNAME /><TB1_ROS_NAMESPACE /><SSH_TB1_IP /><SSH_TB1_USERNAME /><SSH_TB1_PASSWORD /><SSH_TB1_PORT /></TB1_Settings>
